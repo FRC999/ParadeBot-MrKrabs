@@ -13,15 +13,20 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static String CanbusName = "rio";
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
 
   public static class DriveConstants {
-    public static final int RightFrontDriveMotor = 1;
-    public static final int RightBackDriveMotor = 2;
-    public static final int LeftFrontDriveMotor = 3;
-    public static final int LeftBackDriveMotor = 4;
-    
+    public static final int RightFrontDriveMotorCanID = 1;
+    public static final int RightBackDriveMotorCanID = 2;
+    public static final int LeftFrontDriveMotorCanID = 3;
+    public static final int LeftBackDriveMotorCanID = 4;
+
+    public static final boolean RightFrontDriveMotorInverted = false;
+    public static final boolean RightBackDriveMotorInverted = true;
+    public static final boolean LeftFrontDriveMotorInverted = false;
+    public static final boolean LeftBackDriveMotorInverted = true;
   }
 }
