@@ -24,9 +24,12 @@ public final class Constants {
     public static final int leftFrontDriveMotorCanID = 3;
     public static final int leftBackDriveMotorCanID = 4;
 
+    public static final boolean leftFollowerInversion = false;
+    public static final boolean rightFollowerInversion = false;
+
     public static final boolean rightFrontDriveMotorInverted = false;
-    public static final boolean rightBackDriveMotorInverted = true;
-    public static final boolean leftFrontDriveMotorInverted = false;
+    public static final boolean rightBackDriveMotorInverted = false;
+    public static final boolean leftFrontDriveMotorInverted = true;
     public static final boolean leftBackDriveMotorInverted = true;
 
     public static double turnAdjust = 0.6;

@@ -4,15 +4,21 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer;
 
 public class DriveManuallyCommand extends Command {
+  DoubleSupplier xAxis;
+  DoubleSupplier yAxis;
   /** Creates a new DriveManuallyCommand. */
-  public DriveManuallyCommand() {
+  public DriveManuallyCommand(DoubleSupplier xAxis, DoubleSupplier yAxis) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.driveSubsystem);
+    this.xAxis = xAxis;
+    this.yAxis = yAxis;
   }
 
   // Called when the command is initially scheduled.
@@ -24,8 +30,8 @@ public class DriveManuallyCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double move = RobotContainer.xboxDriveController.getLeftStickY();
-    double turn = RobotContainer.xboxDriveController.getRightStickX();
+    double move = xAxis.getAsDouble();
+    double turn = yAxis.getAsDouble();
 
     RobotContainer.driveSubsystem.manualDrive(move, turn * DriveConstants.turnAdjust);
   }

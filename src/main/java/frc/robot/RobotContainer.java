@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -32,14 +33,19 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  public static Controller xboxDriveController;
+  public Controller xboxDriveController;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureDriverInterface();
     configureBindings();
-    testMotors();
+    //testMotors();
+
+    driveSubsystem.setDefaultCommand(
+        new DriveManuallyCommand(
+            () -> getDriverXAxis(),
+            () -> getDriverYAxis()));
   }
 
   /**
@@ -70,21 +76,18 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testLeftLeaderMotor(0.2)))
         .onFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.testLeftLeaderMotor(0.0)));
     new JoystickButton(xboxDriveController, 4)
-        .onTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testLeftLeaderMotor(0.2)))
-        .onFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.testLeftLeaderMotor(0.2)));
+        .onTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testRightLeaderMotor(0.2)))
+        .onFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.testRightLeaderMotor(0.0)));
   }
 
-  // private double getDriverXAxis() {
-  //   return -xboxDrivController.getRightStickY();
-  // }
+  private double getDriverXAxis() {
+    return -xboxDriveController.getLeftStickY();
+  }
 
-  // private double getDriverYAxis() {
-  //   return -xboxDrivController.getRightStickX();
-  // }
+  private double getDriverYAxis() {
+    return -xboxDriveController.getRightStickX();
+  }
 
-  // private double getDriverOmegaAxis() {
-  //   return -xboxDrivController.getLeftStickX() * 0.6;
-  // }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
