@@ -17,9 +17,9 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
     compressor = new Compressor(Constants.PneumaticComstants.compressorCanID, PneumaticsModuleType.CTREPCM);
-    solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 
-    Constants.PneumaticComstants.solenoidChannel[0], 
-    Constants.PneumaticComstants.solenoidChannel[1]);
+    // solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 
+    // Constants.PneumaticComstants.solenoidChannel[0], 
+    // Constants.PneumaticComstants.solenoidChannel[1]);
 
     activateCompressor();
   }
