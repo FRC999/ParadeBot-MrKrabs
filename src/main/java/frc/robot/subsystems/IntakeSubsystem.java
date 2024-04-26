@@ -13,13 +13,13 @@ import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
   private Compressor compressor;
-  private static DoubleSolenoid solenoid;
+  public static DoubleSolenoid intakeSolenoid;
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
     compressor = new Compressor(Constants.PneumaticComstants.compressorCanID, PneumaticsModuleType.CTREPCM);
-    // solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 
-    // Constants.PneumaticComstants.solenoidChannel[0], 
-    // Constants.PneumaticComstants.solenoidChannel[1]);
+    intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 
+      Constants.PneumaticComstants.intakeSolenoidChannel[0], 
+      Constants.PneumaticComstants.intakeSolenoidChannel[1]);
 
     activateCompressor();
   }
@@ -33,15 +33,15 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void extendCylinder() {
-    solenoid.set(Value.kForward);
+    intakeSolenoid.set(Value.kForward);
   }
 
   public void retractCylinder() {
-    solenoid.set(Value.kReverse);
+    intakeSolenoid.set(Value.kReverse);
   }
 
   public void toggleCylinder() {
-    solenoid.toggle();
+    intakeSolenoid.toggle();
   }
   
   @Override

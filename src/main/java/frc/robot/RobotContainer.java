@@ -9,6 +9,8 @@ import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeDown;
+import frc.robot.commands.IntakeUp;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -43,6 +45,7 @@ public class RobotContainer {
     configureDriverInterface();
     configureBindings();
     //testMotors();
+    testIntake();
 
     driveSubsystem.setDefaultCommand(
         new DriveManuallyCommand(
@@ -80,6 +83,13 @@ public class RobotContainer {
     new JoystickButton(xboxDriveController, 4)
         .onTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testRightLeaderMotor(0.2)))
         .onFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.testRightLeaderMotor(0.0)));
+  }
+
+  private void testIntake() {
+    new JoystickButton(xboxDriveController, 2)
+      .whileTrue(new IntakeDown());
+    new JoystickButton(xboxDriveController, 3)
+      .whileTrue(new IntakeUp());
   }
 
   private double getDriverXAxis() {

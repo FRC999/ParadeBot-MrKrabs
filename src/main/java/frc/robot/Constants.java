@@ -108,7 +108,7 @@ public final class Constants {
 
 	public static final class PneumaticComstants {
 		public static final int compressorCanID = 0; //TODO: Needs to be rechecked
-		//public static int[] solenoidChannel;
+		public static int[] intakeSolenoidChannel = {2, 3};
 	}
 
 }
