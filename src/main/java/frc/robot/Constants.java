@@ -5,37 +5,42 @@
 package frc.robot;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static String canbusName = "rio";
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
+	public static String canbusName = "rio";
 
-  public static class DriveConstants {
-    public static final int rightFrontDriveMotorCanID = 1;
-    public static final int rightBackDriveMotorCanID = 2;
-    public static final int leftFrontDriveMotorCanID = 3;
-    public static final int leftBackDriveMotorCanID = 4;
+	public static class OperatorConstants {
+		public static final int kDriverControllerPort = 0;
+	}
 
-    public static final boolean leftFollowerInversion = false;
-    public static final boolean rightFollowerInversion = false;
+	public static class DriveConstants {
+		public static final int rightFrontDriveMotorCanID = 1;
+		public static final int rightBackDriveMotorCanID = 2;
+		public static final int leftFrontDriveMotorCanID = 3;
+		public static final int leftBackDriveMotorCanID = 4;
 
-    public static final boolean rightFrontDriveMotorInverted = false;
-    public static final boolean rightBackDriveMotorInverted = false;
-    public static final boolean leftFrontDriveMotorInverted = true;
-    public static final boolean leftBackDriveMotorInverted = true;
+		public static final boolean leftFollowerInversion = false;
+		public static final boolean rightFollowerInversion = false;
 
-    public static double turnAdjust = 0.6;
-  }
+		public static final boolean rightFrontDriveMotorInverted = false;
+		public static final boolean rightBackDriveMotorInverted = false;
+		public static final boolean leftFrontDriveMotorInverted = true;
+		public static final boolean leftBackDriveMotorInverted = true;
 
-  public static final class OIConstants {
+		public static double turnAdjust = 0.6;
+	}
+
+	public static final class OIConstants {
 		public static final int driverControllerPort = 0;
 
 		public static final int xBoxControllerAButton = 1;
@@ -45,7 +50,6 @@ public final class Constants {
 		public static final int xBoxControllerRightTrigger = 3;
 		public static final int xBoxControllerLeftTrigger = 2;
 
-
 		public static enum ControllerDeviceType {
 			LOGITECH,
 			PS5,
@@ -54,7 +58,7 @@ public final class Constants {
 		}
 
 		public static enum ControllerDevice {
-			
+
 			XBOX_CONTROLLER(
 					0, // Port Number for Xbox controller
 					ControllerDeviceType.XBOX,
@@ -63,7 +67,6 @@ public final class Constants {
 					0.03, // deadband Omega for Xbox
 					false, // No cube controller configuration for Xbox yet
 					false);
-
 
 			private ControllerDeviceType controllerDeviceType;
 			private int portNumber;
@@ -116,18 +119,32 @@ public final class Constants {
 
 	public static final class PneumaticComstants {
 		public static final int compressorCanID = 0;
-		public static final int[] intakeSolenoidChannel = {2, 3};
-		public static final int[] shooterSolenoidChannel = {1, 0};
+		public static final int[] intakeSolenoidChannel = { 2, 3 };
+		public static final int[] shooterSolenoidChannel = { 1, 0 };
 	}
 
 	public static final class IntakeConstants {
 		public static final int intakeMotorPort = 5;
 		public static final double intakeForwardSpeed = 0.7;
-        public static final double intakeReverseSpeed = -0.7;
+		public static final double intakeReverseSpeed = -0.7;
 	}
 
 	public static final class ShooterConstants {
-		
+		public static final int tiltMotorPortID = 10;
+		public static final int leftShooterMotorID = 11;
+		public static final int rightShooterMotorID = 12;
+
+		public static final double shooterSpeedIn = -0.5;
+		public static final double shooterSpeedOut = 0.8;
+
+		public final static int configureTimeoutMs = 30;
+		public final static int PID_TILT = 0;
+		public final static boolean MotorInvert = true;
+		public final static boolean tiltEncoderSensorPhase = false;
+		public static final int tiltContinuousCurrentLimit = 1; // amperes
+		public static final int tiltPeakCurrentLimit = 5; // amperes
+		public static final int tiltPeakCurrentDuration = 1000; // Milliseconds
+		public static final boolean tiltEnableCurrentLimit = true;
 	}
 
 }

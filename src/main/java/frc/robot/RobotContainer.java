@@ -13,11 +13,13 @@ import frc.robot.commands.ExtendPlunger;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeUp;
 import frc.robot.commands.RetractPlunger;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -38,6 +40,8 @@ public class RobotContainer {
   public final static PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
   public final static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public final static ArmSubsystem armSubsystem = new ArmSubsystem();
+  public final static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -120,6 +124,13 @@ public class RobotContainer {
       .onTrue(new ExtendPlunger());
     new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerYButton)
       .onTrue(new RetractPlunger());
+    
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerXButton)
+      .whileTrue(new InstantCommand(() -> RobotContainer.shooterSubsystem.runShooterIn()))
+      .whileFalse(new InstantCommand(() -> RobotContainer.shooterSubsystem.stopShooter()));
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerBButton)
+      .whileTrue(new InstantCommand(() -> RobotContainer.shooterSubsystem.runShooterOut()))
+      .whileFalse(new InstantCommand(() -> RobotContainer.shooterSubsystem.stopShooter()));
   }
 
   private double getDriverXAxis() {
