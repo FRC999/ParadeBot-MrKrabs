@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -12,10 +15,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
+  private WPI_TalonSRX intakeMotorController;
   private Compressor compressor;
   public static DoubleSolenoid intakeSolenoid;
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
+    intakeMotorController = new WPI_TalonSRX(Constants.IntakeConstants.intakeMotorPort);
+    intakeMotorController.setInverted(true);
+
     compressor = new Compressor(Constants.PneumaticComstants.compressorCanID, PneumaticsModuleType.CTREPCM);
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 
       Constants.PneumaticComstants.intakeSolenoidChannel[0], 
@@ -23,6 +30,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
     activateCompressor();
   }
+
+public void configureIntakeMotor() {
+  intakeMotorController.setNeutralMode(NeutralMode.Brake);
+}
 
   public void activateCompressor() {
     compressor.enableDigital();
@@ -42,6 +53,18 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void toggleCylinder() {
     intakeSolenoid.toggle();
+  }
+
+  public void spinIntakeForward() {
+    intakeMotorController.set(Constants.IntakeConstants.intakeForwardSpeed);
+  }
+
+  public void spinIntakeReverse() {
+    intakeMotorController.set(Constants.IntakeConstants.intakeReverseSpeed);
+  }
+
+  public void stopIntakeMotor() {
+    intakeMotorController.set(0);
   }
   
   @Override

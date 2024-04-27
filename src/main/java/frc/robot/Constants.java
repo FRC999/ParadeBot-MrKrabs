@@ -111,4 +111,10 @@ public final class Constants {
 		public static int[] intakeSolenoidChannel = {2, 3};
 	}
 
+	public static final class IntakeConstants {
+		public static final int intakeMotorPort = 5;
+		public static final double intakeForwardSpeed = 0.7;
+        public static final double intakeReverseSpeed = -0.7;
+	}
+
 }

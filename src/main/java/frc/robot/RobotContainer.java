@@ -86,10 +86,17 @@ public class RobotContainer {
   }
 
   private void testIntake() {
-    new JoystickButton(xboxDriveController, 2)
-      .whileTrue(new IntakeDown());
+    // new JoystickButton(xboxDriveController, 2)
+    //   .whileTrue(new IntakeDown());
+    // new JoystickButton(xboxDriveController, 3)
+    //   .whileTrue(new IntakeUp());
+
     new JoystickButton(xboxDriveController, 3)
-      .whileTrue(new IntakeUp());
+      .whileTrue(new InstantCommand(() -> RobotContainer.intakeSubsystem.spinIntakeForward()))
+      .whileFalse(new InstantCommand(() -> RobotContainer.intakeSubsystem.stopIntakeMotor()));
+    new JoystickButton(xboxDriveController, 4)
+      .whileTrue(new InstantCommand(() -> RobotContainer.intakeSubsystem.spinIntakeReverse()))
+      .whileFalse(new InstantCommand(() -> RobotContainer.intakeSubsystem.stopIntakeMotor()));
   }
 
   private double getDriverXAxis() {
