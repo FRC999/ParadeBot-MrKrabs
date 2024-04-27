@@ -38,6 +38,14 @@ public final class Constants {
   public static final class OIConstants {
 		public static final int driverControllerPort = 0;
 
+		public static final int xBoxControllerAButton = 1;
+		public static final int xBoxControllerBButton = 2;
+		public static final int xBoxControllerXButton = 3;
+		public static final int xBoxControllerYButton = 4;
+		public static final int xBoxControllerRightTrigger = 3;
+		public static final int xBoxControllerLeftTrigger = 2;
+
+
 		public static enum ControllerDeviceType {
 			LOGITECH,
 			PS5,
@@ -107,14 +115,19 @@ public final class Constants {
 	}
 
 	public static final class PneumaticComstants {
-		public static final int compressorCanID = 0; //TODO: Needs to be rechecked
-		public static int[] intakeSolenoidChannel = {2, 3};
+		public static final int compressorCanID = 0;
+		public static final int[] intakeSolenoidChannel = {2, 3};
+		public static final int[] shooterSolenoidChannel = {1, 0};
 	}
 
 	public static final class IntakeConstants {
 		public static final int intakeMotorPort = 5;
 		public static final double intakeForwardSpeed = 0.7;
         public static final double intakeReverseSpeed = -0.7;
+	}
+
+	public static final class ShooterConstants {
+		
 	}
 
 }

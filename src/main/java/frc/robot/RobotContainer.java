@@ -9,11 +9,15 @@ import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ExtendPlunger;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeUp;
+import frc.robot.commands.RetractPlunger;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,7 +35,9 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public final static PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
   public final static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -44,8 +50,10 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureDriverInterface();
     configureBindings();
+    configureTrigger();
     //testMotors();
-    testIntake();
+    //testIntake();
+    testShooter();
 
     driveSubsystem.setDefaultCommand(
         new DriveManuallyCommand(
@@ -72,6 +80,14 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
+  private void configureTrigger() {
+    new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerRightTrigger) > 0.3) // L2 trigger - spit out note
+      .onTrue(new IntakeDown())
+      .onFalse(new InstantCommand(() -> RobotContainer.intakeSubsystem.stopIntakeMotor()));
+    new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerLeftTrigger) > 0.3)
+      .onTrue(new IntakeUp());
+  }
+
   private void configureDriverInterface() {
     xboxDriveController = new Controller(ControllerDevice.XBOX_CONTROLLER);
   }
@@ -86,10 +102,10 @@ public class RobotContainer {
   }
 
   private void testIntake() {
-    // new JoystickButton(xboxDriveController, 2)
-    //   .whileTrue(new IntakeDown());
-    // new JoystickButton(xboxDriveController, 3)
-    //   .whileTrue(new IntakeUp());
+    new JoystickButton(xboxDriveController, 2)
+      .whileTrue(new IntakeDown());
+    new JoystickButton(xboxDriveController, 3)
+      .whileTrue(new IntakeUp());
 
     new JoystickButton(xboxDriveController, 3)
       .whileTrue(new InstantCommand(() -> RobotContainer.intakeSubsystem.spinIntakeForward()))
@@ -97,6 +113,13 @@ public class RobotContainer {
     new JoystickButton(xboxDriveController, 4)
       .whileTrue(new InstantCommand(() -> RobotContainer.intakeSubsystem.spinIntakeReverse()))
       .whileFalse(new InstantCommand(() -> RobotContainer.intakeSubsystem.stopIntakeMotor()));
+  }
+
+  private void testShooter() {
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerAButton)
+      .onTrue(new ExtendPlunger());
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerYButton)
+      .onTrue(new RetractPlunger());
   }
 
   private double getDriverXAxis() {

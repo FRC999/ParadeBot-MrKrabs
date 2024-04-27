@@ -16,32 +16,21 @@ import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
   private WPI_TalonSRX intakeMotorController;
-  private Compressor compressor;
   public static DoubleSolenoid intakeSolenoid;
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
     intakeMotorController = new WPI_TalonSRX(Constants.IntakeConstants.intakeMotorPort);
     intakeMotorController.setInverted(true);
 
-    compressor = new Compressor(Constants.PneumaticComstants.compressorCanID, PneumaticsModuleType.CTREPCM);
+    
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 
       Constants.PneumaticComstants.intakeSolenoidChannel[0], 
       Constants.PneumaticComstants.intakeSolenoidChannel[1]);
-
-    activateCompressor();
   }
 
 public void configureIntakeMotor() {
   intakeMotorController.setNeutralMode(NeutralMode.Brake);
 }
-
-  public void activateCompressor() {
-    compressor.enableDigital();
-  }
-
-  public void deactivateCompressor() {
-    compressor.disable();
-  }
 
   public void extendCylinder() {
     intakeSolenoid.set(Value.kForward);

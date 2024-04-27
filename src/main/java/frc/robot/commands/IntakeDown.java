@@ -21,5 +21,6 @@ public class IntakeDown extends InstantCommand {
   @Override
   public void initialize() {
     RobotContainer.intakeSubsystem.intakeSolenoid.set(Value.kForward);
+    RobotContainer.intakeSubsystem.spinIntakeForward();
   }
 }
