@@ -17,18 +17,42 @@ public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {
     tiltMotorController = new WPI_TalonSRX(Constants.ShooterConstants.tiltMotorPortID);
+
+    configureTiltMotorController();
   }
 
   public void configureTiltMotorController() {
     tiltMotorController.configFactoryDefault();
 
-    tiltMotorController.setInverted(Constants.ShooterConstants.MotorInvert);
+    tiltMotorController.setInverted(Constants.ShooterConstants.tiltMotorInvert);
 
     tiltMotorController.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute,
         Constants.ShooterConstants.PID_TILT,
         Constants.ShooterConstants.configureTimeoutMs);
 
     tiltMotorController.setSensorPhase(Constants.ShooterConstants.tiltEncoderSensorPhase);
+
+    tiltMotorController.configPeakOutputForward(Constants.ShooterConstants.PeakOutput,
+        Constants.ShooterConstants.configureTimeoutMs);
+    tiltMotorController.configPeakOutputReverse(Constants.ShooterConstants.PeakOutput * (-1),
+        Constants.ShooterConstants.configureTimeoutMs);
+    tiltMotorController.configNominalOutputForward(0, Constants.ShooterConstants.configureTimeoutMs);
+    tiltMotorController.configNominalOutputReverse(0, Constants.ShooterConstants.configureTimeoutMs);
+
+    tiltMotorController.configAllowableClosedloopError(Constants.ShooterConstants.SLOT_0,
+        Constants.ShooterConstants.tiltDefaultAcceptableError,
+        Constants.ShooterConstants.configureTimeoutMs);
+
+    tiltMotorController.config_kP(Constants.ShooterConstants.SLOT_0, Constants.ShooterConstants.P_TILT,
+        Constants.ShooterConstants.configureTimeoutMs);
+    tiltMotorController.config_kI(Constants.ShooterConstants.SLOT_0, Constants.ShooterConstants.I_TILT,
+        Constants.ShooterConstants.configureTimeoutMs);
+    tiltMotorController.config_kD(Constants.ShooterConstants.SLOT_0, Constants.ShooterConstants.D_TILT,
+        Constants.ShooterConstants.configureTimeoutMs);
+    tiltMotorController.config_kF(Constants.ShooterConstants.SLOT_0, Constants.ShooterConstants.F_TILT,
+        Constants.ShooterConstants.configureTimeoutMs);
+
+    tiltMotorController.setSelectedSensorPosition((getTiltAbsoluteEncoder()-Constants.ShooterConstants.absoluteEncoderZeroValue));
   }
 
   public int getTiltEncoder() {

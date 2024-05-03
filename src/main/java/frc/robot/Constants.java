@@ -139,12 +139,22 @@ public final class Constants {
 
 		public final static int configureTimeoutMs = 30;
 		public final static int PID_TILT = 0;
-		public final static boolean MotorInvert = true;
-		public final static boolean tiltEncoderSensorPhase = false;
+		public final static boolean tiltMotorInvert = true;
+		public final static boolean tiltEncoderSensorPhase = true;
 		public static final int tiltContinuousCurrentLimit = 1; // amperes
 		public static final int tiltPeakCurrentLimit = 5; // amperes
 		public static final int tiltPeakCurrentDuration = 1000; // Milliseconds
 		public static final boolean tiltEnableCurrentLimit = true;
+		public static final double PeakOutput = 0.4;
+		public static final int SLOT_0 = 0;
+		public static final int tiltDefaultAcceptableError = 1;
+
+		public static final double P_TILT = 0.8;
+        public static final double I_TILT = 0.0002;
+        public static final double D_TILT = 0.8;
+		public final static double F_TILT = 0;
+
+		public static final int absoluteEncoderZeroValue = 3015;
 	}
 
 }

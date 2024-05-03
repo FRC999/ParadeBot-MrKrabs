@@ -15,6 +15,7 @@ public class SmartDashboardSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Tilt Encoder Value: ", RobotContainer.armSubsystem.getTiltAbsoluteEncoder());
+    SmartDashboard.putNumber("Tilt Absolute Encoder Value: ", RobotContainer.armSubsystem.getTiltAbsoluteEncoder());
+    SmartDashboard.putNumber("Tilt Relative Encoder Value: ", RobotContainer.armSubsystem.getTiltEncoder());
   }
 }
