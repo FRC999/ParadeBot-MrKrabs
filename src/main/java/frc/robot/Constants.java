@@ -125,7 +125,7 @@ public final class Constants {
 
 	public static final class IntakeConstants {
 		public static final int intakeMotorPort = 5;
-		public static final double intakeForwardSpeed = 0.7;
+		public static final double intakeForwardSpeed = 0.5;
 		public static final double intakeReverseSpeed = -0.7;
 	}
 
@@ -139,8 +139,8 @@ public final class Constants {
 
 		public final static int configureTimeoutMs = 30;
 		public final static int PID_TILT = 0;
-		public final static boolean tiltMotorInvert = true;
-		public final static boolean tiltEncoderSensorPhase = true;
+		public final static boolean tiltMotorInvert = false;
+		public final static boolean tiltEncoderSensorPhase = false;
 		public static final int tiltContinuousCurrentLimit = 1; // amperes
 		public static final int tiltPeakCurrentLimit = 5; // amperes
 		public static final int tiltPeakCurrentDuration = 1000; // Milliseconds
@@ -155,6 +155,8 @@ public final class Constants {
 		public final static double F_TILT = 0;
 
 		public static final int absoluteEncoderZeroValue = 3015;
+		public static final int tiltBallPickupPosition = 0;
+		public static final int tiltBallShootingPosition = 690;
 	}
 
 }

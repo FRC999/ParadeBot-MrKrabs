@@ -4,22 +4,21 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeDown extends InstantCommand {
-  public IntakeDown() {
+public class ShooterStopSpinning extends InstantCommand {
+  public ShooterStopSpinning() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.intakeSubsystem);
+    addRequirements(RobotContainer.shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.intakeSubsystem.intakeSolenoid.set(Value.kForward);
+    RobotContainer.shooterSubsystem.stopShooter();
   }
 }

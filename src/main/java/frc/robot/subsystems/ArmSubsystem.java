@@ -5,20 +5,24 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
-  public WPI_TalonSRX tiltMotorController;
+  private WPI_TalonSRX tiltMotorController;
 
   /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {
     tiltMotorController = new WPI_TalonSRX(Constants.ShooterConstants.tiltMotorPortID);
 
     configureTiltMotorController();
+    tiltMotorBrakeMode();
   }
 
   public void configureTiltMotorController() {
@@ -55,6 +59,10 @@ public class ArmSubsystem extends SubsystemBase {
     tiltMotorController.setSelectedSensorPosition((getTiltAbsoluteEncoder()-Constants.ShooterConstants.absoluteEncoderZeroValue));
   }
 
+  public void tiltMotorBrakeMode() {
+    tiltMotorController.setNeutralMode(NeutralMode.Brake);
+  }
+
   public int getTiltEncoder() {
     return (int) tiltMotorController.getSelectedSensorPosition();
   }
@@ -76,6 +84,14 @@ public class ArmSubsystem extends SubsystemBase {
 
   public int getTiltAbsoluteEncoder() {
     return (int) tiltMotorController.getSensorCollection().getPulseWidthPosition() & 0xFFF;
+  }
+
+  public void tiltMoveWithPower(double power) {
+    tiltMotorController.set(TalonSRXControlMode.PercentOutput, power);
+  }
+
+  public void tiltHoldPosition(int position) {
+    tiltMotorController.set(TalonSRXControlMode.Position, position);
   }
 
   @Override

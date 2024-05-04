@@ -6,10 +6,15 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
+import frc.robot.commands.ArmReleasePID;
+import frc.robot.commands.ArmToPickup;
+import frc.robot.commands.ArmToShoot;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ExtendPlunger;
+import frc.robot.commands.IntakeBall;
+import frc.robot.commands.IntakeBallStop;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeUp;
 import frc.robot.commands.RetractPlunger;
@@ -57,7 +62,8 @@ public class RobotContainer {
     configureTrigger();
     //testMotors();
     //testIntake();
-    testShooter();
+    //testShooter();
+    testArm();
 
     driveSubsystem.setDefaultCommand(
         new DriveManuallyCommand(
@@ -131,6 +137,33 @@ public class RobotContainer {
     new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerBButton)
       .whileTrue(new InstantCommand(() -> RobotContainer.shooterSubsystem.runShooterOut()))
       .whileFalse(new InstantCommand(() -> RobotContainer.shooterSubsystem.stopShooter()));
+  }
+
+  private void testArm() {
+    // new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerAButton)
+    //   .onTrue(new InstantCommand(() -> RobotContainer.armSubsystem.tiltMoveWithPower(0.2)))
+    //   .onFalse(new InstantCommand(() -> RobotContainer.armSubsystem.tiltMoveWithPower(0.0)));
+
+    // new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerBButton)
+    //   .onTrue(new InstantCommand(() -> RobotContainer.armSubsystem.tiltHoldPosition(Constants.ShooterConstants.tiltBallShootingPosition)))
+    //   .onFalse(new InstantCommand(() -> RobotContainer.armSubsystem.tiltMoveWithPower(0.0)));
+
+    // new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerXButton)
+    //   .onTrue(new InstantCommand(() -> RobotContainer.armSubsystem.tiltHoldPosition(Constants.ShooterConstants.tiltBallPickupPosition)))
+    //   .onFalse(new InstantCommand(() -> RobotContainer.armSubsystem.tiltMoveWithPower(0.0)));
+
+    // new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerAButton)
+    //    .onTrue(new ArmToPickup());
+    
+    // new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerBButton)
+    //    .onTrue(new ArmToShoot());
+    
+    // new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerXButton)
+    //    .onTrue(new ArmReleasePID());
+
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerXButton)
+      .onTrue(new IntakeBall())
+      .onFalse(new IntakeBallStop());
   }
 
   private double getDriverXAxis() {
