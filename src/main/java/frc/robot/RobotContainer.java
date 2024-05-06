@@ -16,8 +16,11 @@ import frc.robot.commands.ExtendPlunger;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.IntakeBallStop;
 import frc.robot.commands.IntakeDown;
+import frc.robot.commands.IntakeStopSpinning;
 import frc.robot.commands.IntakeUp;
 import frc.robot.commands.RetractPlunger;
+import frc.robot.commands.ShootBall;
+import frc.robot.commands.ShooterStopSpinning;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -62,7 +65,7 @@ public class RobotContainer {
     configureTrigger();
     //testMotors();
     //testIntake();
-    //testShooter();
+    testShooter();
     testArm();
 
     driveSubsystem.setDefaultCommand(
@@ -92,10 +95,13 @@ public class RobotContainer {
 
   private void configureTrigger() {
     new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerRightTrigger) > 0.3) // L2 trigger - spit out note
-      .onTrue(new IntakeDown())
-      .onFalse(new InstantCommand(() -> RobotContainer.intakeSubsystem.stopIntakeMotor()));
+      .onTrue(new IntakeBall())
+      .onFalse(new IntakeBallStop());
     new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerLeftTrigger) > 0.3)
       .onTrue(new IntakeUp());
+    new JoystickButton(xboxDriveController, 6)
+      .onTrue(new ShootBall())
+      .onFalse(new ShooterStopSpinning());
   }
 
   private void configureDriverInterface() {
@@ -137,6 +143,9 @@ public class RobotContainer {
     new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerBButton)
       .whileTrue(new InstantCommand(() -> RobotContainer.shooterSubsystem.runShooterOut()))
       .whileFalse(new InstantCommand(() -> RobotContainer.shooterSubsystem.stopShooter()));
+
+    new JoystickButton(xboxDriveController, 6)
+      .whileTrue(new ShootBall());
   }
 
   private void testArm() {

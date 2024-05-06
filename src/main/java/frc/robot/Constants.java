@@ -149,14 +149,14 @@ public final class Constants {
 		public static final int SLOT_0 = 0;
 		public static final int tiltDefaultAcceptableError = 1;
 
-		public static final double P_TILT = 0.8;
+		public static final double P_TILT = 1.5;
         public static final double I_TILT = 0.0002;
         public static final double D_TILT = 0.8;
 		public final static double F_TILT = 0;
 
 		public static final int absoluteEncoderZeroValue = 3015;
 		public static final int tiltBallPickupPosition = 0;
-		public static final int tiltBallShootingPosition = 690;
+		public static final int tiltBallShootingPosition = 500;
 	}
 
 }

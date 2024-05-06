@@ -56,7 +56,8 @@ public class ArmSubsystem extends SubsystemBase {
     tiltMotorController.config_kF(Constants.ShooterConstants.SLOT_0, Constants.ShooterConstants.F_TILT,
         Constants.ShooterConstants.configureTimeoutMs);
 
-    tiltMotorController.setSelectedSensorPosition((getTiltAbsoluteEncoder()-Constants.ShooterConstants.absoluteEncoderZeroValue));
+    tiltMotorController
+        .setSelectedSensorPosition((getTiltAbsoluteEncoder() - Constants.ShooterConstants.absoluteEncoderZeroValue));
   }
 
   public void tiltMotorBrakeMode() {
