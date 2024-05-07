@@ -18,8 +18,9 @@ import frc.robot.commands.IntakeBallStop;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeStopSpinning;
 import frc.robot.commands.IntakeUp;
+import frc.robot.commands.IntakeUpAndShooterStopSpinning;
 import frc.robot.commands.RetractPlunger;
-import frc.robot.commands.ShootBall;
+import frc.robot.commands.ShootBallSequence;
 import frc.robot.commands.ShooterStopSpinning;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -65,8 +66,10 @@ public class RobotContainer {
     configureTrigger();
     //testMotors();
     //testIntake();
-    testShooter();
-    testArm();
+    //testShooter();
+    // testArm();
+
+    finalControlMapping();
 
     driveSubsystem.setDefaultCommand(
         new DriveManuallyCommand(
@@ -83,6 +86,7 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
+
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
@@ -93,6 +97,16 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
+  private void finalControlMapping() {
+    new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerLeftTrigger) > 0.3)
+      .onTrue(new IntakeUpAndShooterStopSpinning());
+    new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerLeftTrigger) > 0.3)
+      .onTrue(new IntakeBall())
+      .onFalse(new IntakeBallStop());
+    new JoystickButton(xboxDriveController, 1)
+      .onTrue(new ShootBallSequence());
+  }
+
   private void configureTrigger() {
     new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerRightTrigger) > 0.3) // L2 trigger - spit out note
       .onTrue(new IntakeBall())
@@ -100,7 +114,7 @@ public class RobotContainer {
     new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerLeftTrigger) > 0.3)
       .onTrue(new IntakeUp());
     new JoystickButton(xboxDriveController, 6)
-      .onTrue(new ShootBall())
+      .onTrue(new ShootBallSequence())
       .onFalse(new ShooterStopSpinning());
   }
 
@@ -145,7 +159,7 @@ public class RobotContainer {
       .whileFalse(new InstantCommand(() -> RobotContainer.shooterSubsystem.stopShooter()));
 
     new JoystickButton(xboxDriveController, 6)
-      .whileTrue(new ShootBall());
+      .whileTrue(new ShootBallSequence());
   }
 
   private void testArm() {
