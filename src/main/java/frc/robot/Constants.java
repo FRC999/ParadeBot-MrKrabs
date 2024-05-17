@@ -19,6 +19,10 @@ package frc.robot;
 public final class Constants {
 	public static String canbusName = "rio";
 
+	public static class CANdleConstants{
+		public static int candlePort = 0;
+	}
+
 	public static class OperatorConstants {
 		public static final int kDriverControllerPort = 0;
 	}

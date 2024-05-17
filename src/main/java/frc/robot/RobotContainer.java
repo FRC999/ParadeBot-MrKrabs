@@ -26,9 +26,11 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
+import frc.robot.subsystems.LEDSubsystem.AnimationTypes;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -50,6 +52,7 @@ public class RobotContainer {
   public final static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public final static ArmSubsystem armSubsystem = new ArmSubsystem();
+    public final static LEDSubsystem ledSubsystem = new LEDSubsystem();
   public final static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -64,6 +67,7 @@ public class RobotContainer {
     configureDriverInterface();
     configureBindings();
     configureTrigger();
+    LEDAnimationChange();
     //testMotors();
     //testIntake();
     //testShooter();
@@ -120,6 +124,15 @@ public class RobotContainer {
 
   private void configureDriverInterface() {
     xboxDriveController = new Controller(ControllerDevice.XBOX_CONTROLLER);
+  }
+
+  private void LEDAnimationChange() {
+    new JoystickButton(xboxDriveController, 7)
+        .onTrue(new InstantCommand(() -> RobotContainer.ledSubsystem.setLEDRed()))
+        .onTrue(new InstantCommand(() -> RobotContainer.ledSubsystem.setLEDWhite()))
+        .onTrue(new InstantCommand(() -> RobotContainer.ledSubsystem.setLEDBlue()))
+        .onFalse(new InstantCommand(() -> RobotContainer.ledSubsystem.configBrightness(0)));
+
   }
 
   private void testMotors() {
