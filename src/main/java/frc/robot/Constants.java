@@ -125,6 +125,7 @@ public final class Constants {
 		public static final int compressorCanID = 0;
 		public static final int[] intakeSolenoidChannel = { 2, 3 };
 		public static final int[] shooterSolenoidChannel = { 1, 0 };
+		public static int[] climberSolenoidChannels = new int[] { 4 , 5 };
 	}
 
 	public static final class IntakeConstants {

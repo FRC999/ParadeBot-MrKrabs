@@ -10,6 +10,8 @@ import frc.robot.commands.ArmReleasePID;
 import frc.robot.commands.ArmToPickup;
 import frc.robot.commands.ArmToShoot;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ClimberBackward;
+import frc.robot.commands.ClimberForward;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ExtendPlunger;
@@ -23,6 +25,7 @@ import frc.robot.commands.RetractPlunger;
 import frc.robot.commands.ShootBallSequence;
 import frc.robot.commands.ShooterStopSpinning;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -52,8 +55,9 @@ public class RobotContainer {
   public final static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public final static ArmSubsystem armSubsystem = new ArmSubsystem();
-    public final static LEDSubsystem ledSubsystem = new LEDSubsystem();
+  public final static LEDSubsystem ledSubsystem = new LEDSubsystem();
   public final static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+  public final static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -66,7 +70,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureDriverInterface();
     configureBindings();
-    configureTrigger();
+    //configureTrigger();
     LEDAnimationChange();
     //testMotors();
     //testIntake();
@@ -102,13 +106,21 @@ public class RobotContainer {
   }
 
   private void finalControlMapping() {
-    new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerLeftTrigger) > 0.3)
-      .onTrue(new IntakeUpAndShooterStopSpinning());
-    new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerLeftTrigger) > 0.3)
+    new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerRightTrigger) > 0.3)
       .onTrue(new IntakeBall())
       .onFalse(new IntakeBallStop());
-    new JoystickButton(xboxDriveController, 1)
+    
+    new Trigger(() -> xboxDriveController.getRawAxis(Constants.OIConstants.xBoxControllerLeftTrigger) > 0.3)
+      .onTrue(new IntakeUpAndShooterStopSpinning());
+    
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerAButton)
       .onTrue(new ShootBallSequence());
+
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerXButton)
+      .onTrue(new ClimberBackward());
+    
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerYButton)
+      .onTrue(new ClimberForward());
   }
 
   private void configureTrigger() {
@@ -127,11 +139,6 @@ public class RobotContainer {
   }
 
   private void LEDAnimationChange() {
-    new JoystickButton(xboxDriveController, 7)
-        .onTrue(new InstantCommand(() -> RobotContainer.ledSubsystem.setLEDRed()))
-        .onTrue(new InstantCommand(() -> RobotContainer.ledSubsystem.setLEDWhite()))
-        .onTrue(new InstantCommand(() -> RobotContainer.ledSubsystem.setLEDBlue()))
-        .onFalse(new InstantCommand(() -> RobotContainer.ledSubsystem.configBrightness(0)));
 
   }
 
