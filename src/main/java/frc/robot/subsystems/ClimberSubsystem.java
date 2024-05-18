@@ -27,6 +27,10 @@ public class ClimberSubsystem extends SubsystemBase {
     climberSolenoid.set(Value.kReverse);
   }
 
+  public void climberToggle() {
+    climberSolenoid.toggle();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -12,6 +12,7 @@ import frc.robot.commands.ArmToShoot;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimberBackward;
 import frc.robot.commands.ClimberForward;
+import frc.robot.commands.ClimberToggle;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ExtendPlunger;
@@ -121,11 +122,8 @@ public class RobotContainer {
     new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerAButton)
       .onTrue(new ShootBallSequence());
 
-    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerXButton)
-      .onTrue(new ClimberBackward());
-    
     new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerYButton)
-      .onTrue(new ClimberForward());
+      .onTrue(new ClimberToggle());
   }
 
   private void configureTrigger() {
