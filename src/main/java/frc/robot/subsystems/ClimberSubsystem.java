@@ -17,6 +17,8 @@ public class ClimberSubsystem extends SubsystemBase {
     climberSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 
       Constants.PneumaticComstants.climberSolenoidChannels[0], 
       Constants.PneumaticComstants.climberSolenoidChannels[1]);
+
+    climberForward();
   }
 
   public void climberForward() {
@@ -28,7 +30,9 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void climberToggle() {
+    System.out.println("Testing Solenoid toggle 1");
     climberSolenoid.toggle();
+    System.out.println("Testing Solenoid toggle 2");
   }
 
   @Override

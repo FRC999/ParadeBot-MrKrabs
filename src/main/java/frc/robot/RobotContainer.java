@@ -39,6 +39,7 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.LEDSubsystem.AnimationTypes;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -76,14 +77,15 @@ public class RobotContainer {
     configureDriverInterface();
     configureBindings();
     //configureTrigger();
-    // LEDAnimationChange();
+    //LEDAnimationChange();
     //testMotors();
     //testIntake();
     //testShooter();
-    // testArm();
-    testLEDs();
+    //testArm();
+    //testLEDs();
+    //testClimber();
 
-    finalControlMapping();
+    //finalControlMapping();
 
     driveSubsystem.setDefaultCommand(
         new DriveManuallyCommand(
@@ -103,12 +105,15 @@ public class RobotContainer {
 
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    //new Trigger(m_exampleSubsystem::exampleCondition)
+    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    finalControlMapping();
+    //testClimber();
+  
   }
 
   private void finalControlMapping() {
@@ -122,8 +127,16 @@ public class RobotContainer {
     new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerAButton)
       .onTrue(new ShootBallSequence());
 
-    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerYButton)
+    new JoystickButton(xboxDriveController, 5)
       .onTrue(new ClimberToggle());
+  }
+
+    private void LEDAnimationChange() {
+    new JoystickButton(xboxDriveController, 7)
+      .onTrue(new SetLEDRWB().repeatedly());
+
+    new JoystickButton(xboxDriveController, 8)
+      .onTrue(new LEDSetOff());
   }
 
   private void configureTrigger() {
@@ -141,8 +154,15 @@ public class RobotContainer {
     xboxDriveController = new Controller(ControllerDevice.XBOX_CONTROLLER);
   }
 
-  private void LEDAnimationChange() {
-
+  private void testClimber() {
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerXButton)
+      .onTrue(new ClimberForward());
+    
+    new JoystickButton(xboxDriveController, Constants.OIConstants.xBoxControllerYButton)
+      .onTrue(new ClimberBackward());
+    
+    new JoystickButton(xboxDriveController, 5)
+      .onTrue(new ClimberToggle());
   }
 
   private void testLEDs() {

@@ -19,6 +19,8 @@ public class ClimberToggle extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("Climber Toggle Test 1");
     RobotContainer.climberSubsystem.climberToggle();
+    System.out.println("Climber Toggle Test 2");
   }
 }
