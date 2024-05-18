@@ -145,6 +145,11 @@ public void decrementAnimation() {
     candleLED.modulateVBatOutput(0.9);
   }
 
+  public void setLEDOff(){
+    candleLED.setLEDs(0,0,0);
+    candleLED.modulateVBatOutput(0.9);
+  }
+
 
   /* Wrappers so we can access the CANdle from the subsystem */
   public double getVbat() { return candleLED.getBusVoltage(); }

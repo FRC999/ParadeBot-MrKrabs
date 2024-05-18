@@ -21,7 +21,11 @@ import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeStopSpinning;
 import frc.robot.commands.IntakeUp;
 import frc.robot.commands.IntakeUpAndShooterStopSpinning;
+import frc.robot.commands.LEDSetBlue;
+import frc.robot.commands.LEDSetOff;
+import frc.robot.commands.LEDSetRed;
 import frc.robot.commands.RetractPlunger;
+import frc.robot.commands.SetLEDRWB;
 import frc.robot.commands.ShootBallSequence;
 import frc.robot.commands.ShooterStopSpinning;
 import frc.robot.subsystems.ArmSubsystem;
@@ -71,11 +75,12 @@ public class RobotContainer {
     configureDriverInterface();
     configureBindings();
     //configureTrigger();
-    LEDAnimationChange();
+    // LEDAnimationChange();
     //testMotors();
     //testIntake();
     //testShooter();
     // testArm();
+    testLEDs();
 
     finalControlMapping();
 
@@ -140,6 +145,14 @@ public class RobotContainer {
 
   private void LEDAnimationChange() {
 
+  }
+
+  private void testLEDs() {
+    new JoystickButton(xboxDriveController, 7)
+      .onTrue(new SetLEDRWB().repeatedly());
+
+    new JoystickButton(xboxDriveController, 8)
+      .onTrue(new LEDSetOff());
   }
 
   private void testMotors() {
